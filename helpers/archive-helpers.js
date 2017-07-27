@@ -61,7 +61,13 @@ exports.addUrlToList = function(url, callback) {
 exports.isUrlArchived = function(url, callback) {
   //check if webpage has been downloaded for given URL
     //do this by checking if a folder web page html exists in paths.archivedSites
-      
+  fs.readFile(this.paths.archivedSites + '/' + url, function(err, data) {
+    if (err) { //if readFile returns an error, that means URL has not been archived, because its file doesn't exist
+      callback(false);
+    } else {
+      callback(true); 
+    }
+  });    
 };
 
 exports.downloadUrls = function(urls) {
